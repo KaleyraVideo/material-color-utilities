@@ -36,3 +36,7 @@ node_modules/
 *.d.ts
 !types/*.d.ts
 .wireit/
+
+### SwiftPackageManager ###
+
+.swiftpm
