@@ -21,16 +21,11 @@ let package = Package(
   products: [
     .library(
       name: "KaleyraMaterial",
-      targets: ["MaterialColorUtilities"]
+      targets: ["KaleyraMaterial"]
     )
   ],
   targets: [
-    .target(name: "MaterialColorUtilities", 
-            path: "swift/Sources/MaterialColorUtilities/"),
-    .testTarget(
-      name: "MaterialColorUtilitiesTests",
-      dependencies: ["MaterialColorUtilities"],
-      path: "swift/Tests/MaterialColorUtilitiesTests/"
-    ),
+    .target(name: "KaleyraMaterial",
+            path: "swift/Sources/MaterialColorUtilities/")
   ]
 )
