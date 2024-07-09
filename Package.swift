@@ -17,10 +17,10 @@
 import PackageDescription
 
 let package = Package(
-  name: "MaterialColorUtilities",
+  name: "KaleyraMaterial",
   products: [
     .library(
-      name: "MaterialColorUtilities",
+      name: "KaleyraMaterial",
       targets: ["MaterialColorUtilities"]
     )
   ],
