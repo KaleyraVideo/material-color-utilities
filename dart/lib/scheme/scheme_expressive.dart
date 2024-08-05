@@ -21,11 +21,11 @@ import 'package:material_color_utilities/utils/math_utils.dart';
 class SchemeExpressive extends DynamicScheme {
   /// Hues used at breakpoints such that designers can specify a hue rotation
   /// that occurs at a given break point.
-  static final hues = <double>[0, 21, 51, 121, 151, 191, 271, 321, 360];
+  static final _hues = <double>[0, 21, 51, 121, 151, 191, 271, 321, 360];
 
   /// Hue rotations of the Secondary [TonalPalette], corresponding to the
-  /// breakpoints in [hues].
-  static final secondaryRotations = <double>[
+  /// breakpoints in [_hues].
+  static final _secondaryRotations = <double>[
     45,
     95,
     45,
@@ -38,8 +38,8 @@ class SchemeExpressive extends DynamicScheme {
   ];
 
   /// Hue rotations of the Tertiary [TonalPalette], corresponding to the
-  /// breakpoints in [hues].
-  static final tertiaryRotations = <double>[
+  /// breakpoints in [_hues].
+  static final _tertiaryRotations = <double>[
     120,
     120,
     20,
@@ -56,7 +56,7 @@ class SchemeExpressive extends DynamicScheme {
     required super.isDark,
     required super.contrastLevel,
   }) : super(
-          sourceColorArgb: sourceColorHct.toInt(),
+          sourceColorHct: sourceColorHct,
           variant: Variant.expressive,
           primaryPalette: TonalPalette.of(
             MathUtils.sanitizeDegreesDouble(sourceColorHct.hue + 240.0),
@@ -64,12 +64,12 @@ class SchemeExpressive extends DynamicScheme {
           ),
           secondaryPalette: TonalPalette.of(
             DynamicScheme.getRotatedHue(
-                sourceColorHct, hues, secondaryRotations),
+                sourceColorHct, _hues, _secondaryRotations),
             24.0,
           ),
           tertiaryPalette: TonalPalette.of(
             DynamicScheme.getRotatedHue(
-                sourceColorHct, hues, tertiaryRotations),
+                sourceColorHct, _hues, _tertiaryRotations),
             32.0,
           ),
           neutralPalette: TonalPalette.of(sourceColorHct.hue + 15.0, 8.0),
