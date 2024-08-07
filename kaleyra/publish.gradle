@@ -1,0 +1,202 @@
+import java.nio.file.FileVisitOption
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.io.File
+
+ext.moduleGroupId = "com.kaleyra"
+ext.moduleVersion = "2024-08-07"
+
+def newLibVersion=  project.hasProperty("newLibVersion") ? project.getProperty("newLibVersion") : moduleVersion
+
+if (project.hasProperty("dryRun")) {
+    project.ext.setProperty("isPublishing", true)
+}
+def dryRun = project.hasProperty("dryRun") ? project.getProperty("dryRun").toBoolean() : true
+def moduleObsfuscated = project.hasProperty("moduleObsfuscated") ? project.getProperty("moduleObsfuscated").toBoolean() : false
+
+Properties properties = new Properties()
+if (project.rootProject.file("local.properties").exists()) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+def descriptions = new HashMap<String, String>()
+descriptions.put("material-color-utilities", "Material Color Utilities")
+
+def mavenAccessKey = properties.getProperty("maven.accessKey") ?: ""
+def mavenSecretKey = properties.getProperty("maven.secretKey") ?: ""
+def mavenDistributionId = properties.getProperty("maven.distributionId") ?: ""
+
+android {
+    publishing {
+        singleVariant('release') {
+            withJavadocJar()
+            if (!moduleObsfuscated) withSourcesJar()
+        }
+    }
+}
+
+
+publishing {
+
+    repositories {
+        maven {
+            url = "s3://maven-bandyer/releases/"
+            credentials(AwsCredentials) {
+                accessKey = mavenAccessKey
+                secretKey = mavenSecretKey
+            }
+        }
+    }
+
+    publications {
+        release(MavenPublication) {
+            afterEvaluate {
+                from components.release
+            }
+            groupId = moduleGroupId
+            artifactId = project.getName()
+            version = moduleVersion
+            pom {
+                url.set("https://m3.material.io/")
+                description.set(descriptions.get(project.getName()))
+                licenses {
+                    license {
+                        name.set("Apache License Version 2.0")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("Kaleyra Spa")
+                        name.set("Kaleyra Spa")
+                    }
+                }
+            }
+        }
+    }
+}
+
+tasks.register("invalidateCache", Exec.class) {
+    workingDir '../scripts'
+    def publishPath = "releases"
+    def packageName = moduleGroupId + "." + project.getName()
+    commandLine 'python3', './invalidate_s3_cache.py', mavenAccessKey, mavenSecretKey, mavenDistributionId, publishPath, packageName, moduleVersion
+}
+
+tasks.register("updateLibVersion", Exec.class) {
+    workingDir '../scripts'
+    commandLine "python3", "./bump_version.py", "-cv", moduleVersion, "-nv", newLibVersion
+}
+
+tasks.register("publishUpload") {
+    def publishTask = 'publishToMavenLocal'
+    if (!dryRun) publishTask = 'publish'
+    dependsOn addPackagePrefix
+    dependsOn publishTask
+    dependsOn 'invalidateCache'
+    tasks.invalidateCache.mustRunAfter(publishTask)
+    finalizedBy("postMavenPublish")
+}
+
+def namespace
+
+afterEvaluate {
+    namespace = android.namespace
+}
+
+tasks.register("addPackagePrefix") {
+    doLast {
+        def folderPath = android.sourceSets.main.java.srcDirs[0].toString()
+        def originalPackages = findOriginalPackagesAndUpdateDeclarations(folderPath, namespace)
+        updateImportsAndLinks(folderPath, namespace, originalPackages)
+    }
+}
+// not needed for github action, useful only if for local release
+tasks.register("postMavenPublish") {
+    doLast {
+        exec {
+            commandLine("git", "checkout", "--hard")
+        }
+    }
+}
+
+static def findOriginalPackagesAndUpdateDeclarations(String folderPath, String prefix) {
+    def originalPackages = [] as Set<String>
+    Files.walk(Paths.get(folderPath), FileVisitOption.FOLLOW_LINKS)
+            .filter { it.toString().endsWith(".java") && !Files.isSymbolicLink(it) }
+            .each { file ->
+                def content = file.toFile().text
+                def originalContent = content
+
+                def matcher = content =~ /(?s)package\s+(\w+);/
+                if (matcher.find() && !content.contains("$prefix.")) {
+                    def originalPackage = matcher.group(1)
+                    originalPackages.add(originalPackage)
+
+                    content = content.replace("package $originalPackage;", "package $prefix.$originalPackage;")
+
+                    if (content != originalContent) {
+                        file.toFile().text = content
+                        println("Updated package in: ${file.fileName}")
+                    }
+                }
+            }
+    return originalPackages
+}
+
+static def updateImportsAndLinks(String folderPath, String prefix, Set<String> originalPackages) {
+    originalPackages.each { originalPackage ->
+        Files.walk(Paths.get(folderPath), FileVisitOption.FOLLOW_LINKS)
+                .filter { it.toString().endsWith(".java") && !Files.isSymbolicLink(it) }
+                .each { file ->
+                    def content = file.toFile().text
+                    def originalContent = content
+
+                    content = content.replaceAll(/(?m)^import\s+$originalPackage\.(\w+);$/) { _, importClass ->
+                        "import $prefix.$originalPackage.$importClass;"
+                    }
+
+                    content = content.replaceAll("@link $originalPackage\\.([^}]+)", "@link $prefix.$originalPackage.\$1")
+
+                    if (content != originalContent) {
+                        file.toFile().text = content
+                        println("Updated imports/links in: ${file.fileName}")
+                    }
+                }
+    }
+}
+
+tasks.forEach {
+    def parts = it.class.name.split("\\.")
+    def lastName = parts[(parts.length - 1)]
+    if (lastName.startsWith("DokkaTaskPartial")) {
+        it.configure {
+            dokkaSourceSets {
+                configureEach {
+                    moduleName.set(project.name)
+                    moduleVersion.set(project.version.toString())
+                    outputDirectory.set(file("docs"))
+                    reportUndocumented.set(true)
+                    jdkVersion.set(8)
+                    includeNonPublic.set(false)
+                    skipEmptyPackages.set(true)
+                }
+            }
+        }
+    }
+}
+
+tasks.register('dokkaHtmlJar', Jar.class) {
+    dependsOn(dokkaHtml)
+    from(dokkaHtml)
+    archiveClassifier.set("html-docs")
+}
+
+tasks.register('dokkaJavadocJar', Jar.class) {
+    dependsOn(dokkaJavadoc)
+    from(dokkaJavadoc)
+    archiveClassifier.set("javadoc")
+}
+
+task androidSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier.set("sources")
+}

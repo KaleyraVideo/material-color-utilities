@@ -1,0 +1,88 @@
+name: Release Catalog
+
+on:
+  workflow_call:
+    inputs:
+      specific_release_version:
+        type: string
+        description: Define the specific release version?
+        required: false
+    secrets:
+      MAVEN_ACCESSKEY:
+        required: true
+      MAVEN_SECRETKEY:
+        required: true
+      MAVEN_DISTRIBUTIONID:
+        required: true
+
+  workflow_dispatch:
+    inputs:
+      specific_release_version:
+        description: Define the specific release version?
+        required: false
+    secrets:
+      MAVEN_ACCESSKEY:
+        required: true
+      MAVEN_SECRETKEY:
+        required: true
+      MAVEN_DISTRIBUTIONID:
+        required: true
+
+jobs:
+  clean_build:
+    runs-on: ubuntu-latest
+    environment:
+      name: release_environment
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          ref: 'main'
+      - name: set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Setup android sdk
+        uses: android-actions/setup-android@v2
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build module
+        run: ./gradlew clean build
+  update_version:
+    runs-on: ubuntu-latest
+    needs: clean_build
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          ref: 'main'
+      - name: set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: gradle
+      - name: add python dependency
+        run: python3 -m pip install semver boto3
+      - name: Update specific version
+        id: output_specific_tag
+        run: ./gradlew updateLibVersion -PnewLibVersion=${{inputs.specific_release_version }}
+      - name: Update Maven credentials
+        env:
+          MAVEN_ACCESSKEY: ${{ secrets.MAVEN_ACCESSKEY }}
+          MAVEN_SECRETKEY: ${{ secrets.MAVEN_SECRETKEY }}
+          MAVEN_DISTRIBUTIONID: ${{ secrets.MAVEN_DISTRIBUTIONID }}
+        run:
+          echo -e "maven.accessKey=$MAVEN_ACCESSKEY\nmaven.secretKey=$MAVEN_SECRETKEY\nmaven.distributionId=$MAVEN_DISTRIBUTIONID" >> ./local.properties
+      - name: Pull Remote Changes
+        run: git pull
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update version
+          tagging_message: ${{ steps.output_specific_tag.outputs.TAG }}
+      - name: Release new version
+        run: ./gradlew publishUpload -PdryRun=false
