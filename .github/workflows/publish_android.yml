@@ -1,4 +1,4 @@
-name: Release Catalog
+name: Release Version
 
 on:
   workflow_call:
