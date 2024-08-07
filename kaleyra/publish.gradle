@@ -113,7 +113,7 @@ tasks.register("addPackagePrefix") {
 tasks.register("postMavenPublish") {
     doLast {
         exec {
-            commandLine("git", "checkout", "--hard")
+            commandLine("git", "reset", "--hard")
         }
     }
 }
