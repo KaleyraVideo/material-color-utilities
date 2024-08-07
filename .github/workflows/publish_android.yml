@@ -31,6 +31,9 @@ on:
 jobs:
   clean_build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./kaleyra
     environment:
       name: release_environment
     steps:
@@ -54,6 +57,9 @@ jobs:
   update_version:
     runs-on: ubuntu-latest
     needs: clean_build
+    defaults:
+      run:
+        working-directory: ./kaleyra
     steps:
       - uses: actions/checkout@v2
         with:
