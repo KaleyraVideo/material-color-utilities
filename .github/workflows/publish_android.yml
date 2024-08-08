@@ -91,5 +91,5 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update version
-          file_pattern: '*.gradle'
+          file_pattern: 'kaleyra/*.gradle'
           tagging_message: ${{ steps.output_specific_tag.outputs.TAG }}
