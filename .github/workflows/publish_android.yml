@@ -84,11 +84,12 @@ jobs:
           MAVEN_DISTRIBUTIONID: ${{ secrets.MAVEN_DISTRIBUTIONID }}
         run:
           echo -e "maven.accessKey=$MAVEN_ACCESSKEY\nmaven.secretKey=$MAVEN_SECRETKEY\nmaven.distributionId=$MAVEN_DISTRIBUTIONID" >> ./local.properties
+      - name: Release new version
+        run: ./gradlew publishUpload -PdryRun=false
       - name: Pull Remote Changes
         run: git pull
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update version
+          file_pattern: '*.gradle'
           tagging_message: ${{ steps.output_specific_tag.outputs.TAG }}
-      - name: Release new version
-        run: ./gradlew publishUpload -PdryRun=false
