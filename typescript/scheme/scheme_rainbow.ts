@@ -15,29 +15,26 @@
  * limitations under the License.
  */
 
-import {DynamicScheme} from '../dynamiccolor/dynamic_scheme.js';
+import {SpecVersion} from '../dynamiccolor/color_spec.js';
+import {DynamicScheme, Platform} from '../dynamiccolor/dynamic_scheme';
 import {Variant} from '../dynamiccolor/variant.js';
 import {Hct} from '../hct/hct.js';
-import {TonalPalette} from '../palettes/tonal_palette.js';
-import * as math from '../utils/math_utils.js';
 
 /**
  * A playful theme - the source color's hue does not appear in the theme.
  */
 export class SchemeRainbow extends DynamicScheme {
-  constructor(sourceColorHct: Hct, isDark: boolean, contrastLevel: number) {
+  constructor(
+      sourceColorHct: Hct, isDark: boolean, contrastLevel: number,
+      specVersion: SpecVersion = DynamicScheme.DEFAULT_SPEC_VERSION,
+      platform: Platform = DynamicScheme.DEFAULT_PLATFORM) {
     super({
       sourceColorHct,
       variant: Variant.RAINBOW,
       contrastLevel,
       isDark,
-      primaryPalette: TonalPalette.fromHueAndChroma(sourceColorHct.hue, 48.0),
-      secondaryPalette: TonalPalette.fromHueAndChroma(sourceColorHct.hue, 16.0),
-      tertiaryPalette: TonalPalette.fromHueAndChroma(
-          math.sanitizeDegreesDouble(sourceColorHct.hue + 60.0), 24.0),
-      neutralPalette: TonalPalette.fromHueAndChroma(sourceColorHct.hue, 0.0),
-      neutralVariantPalette:
-          TonalPalette.fromHueAndChroma(sourceColorHct.hue, 0.0),
+      platform,
+      specVersion,
     });
   }
 }
