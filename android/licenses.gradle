@@ -1,0 +1,25 @@
+//////////////////////// ADD LICENSE IN AAR //////////////////////////////////
+
+def projName = name
+def outputAarUnzipedDir = file('build/outputs/aar/unziped')
+def aarReleaseFile = file('build/outputs/aar/' + projName + '-release.aar')
+
+task unzipAar(type: Copy, dependsOn: 'bundleReleaseAar') {
+    from zipTree(aarReleaseFile)
+    into outputAarUnzipedDir
+    doLast { println("unzipAar task completed.") }
+}
+
+task generateThirdPartiesLicenses(type: Exec, dependsOn: 'unzipAar') {
+    workingDir '../scripts'
+    println(project.getName())
+    commandLine 'python3', 'generate_third_parties_licenses.py', project.getName(), /* include aar metadata */ 'false'
+    doLast {
+        outputAarUnzipedDir.deleteDir()
+    }
+}
+
+afterEvaluate {
+    tasks["generateMetadataFileForReleasePublication"].dependsOn(tasks.named("generateThirdPartiesLicenses"))
+    bundleReleaseAar.finalizedBy(generateThirdPartiesLicenses)
+}

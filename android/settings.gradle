@@ -58,5 +58,5 @@ dependencyResolutionManagement {
 rootProject.name = "material-color-utilities"
 include ":material-color-utilities"
 
-project(':material-color-utilities').projectDir = file('library')
+project(':material-color-utilities').projectDir = file('material-color-utilities')
 
