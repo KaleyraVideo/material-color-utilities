@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package palettes;
+package com.kaleyra.material_color_utilities.palettes;
 
-import hct.Hct;
+import com.kaleyra.material_color_utilities.hct.Hct;
 import java.util.HashMap;
 import java.util.Map;
 

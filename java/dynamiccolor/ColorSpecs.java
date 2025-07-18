@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package dynamiccolor;
+package com.kaleyra.material_color_utilities.dynamiccolor;
 
-import dynamiccolor.ColorSpec.SpecVersion;
+import com.kaleyra.material_color_utilities.dynamiccolor.ColorSpec.SpecVersion;
 
 /** A utility class to get the correct color spec for a given spec version. */
 public final class ColorSpecs {

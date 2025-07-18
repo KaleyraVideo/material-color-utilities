@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package palettes;
+package com.kaleyra.material_color_utilities.palettes;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-import hct.Hct;
+import com.kaleyra.material_color_utilities.hct.Hct;
 
 /**
  * An intermediate concept between the key color for a UI theme, and a full color scheme. 5 sets of
  * tones are generated, all except one use the same hue as the key color, and all vary in chroma.
  *
- * @deprecated Use {@link dynamiccolor.DynamicScheme} for color
- *     scheme generation. Use {@link palettes.CorePalettes} for core
+ * @deprecated Use {@link com.kaleyra.material_color_utilities.dynamiccolor.DynamicScheme} for color
+ *     scheme generation. Use {@link com.kaleyra.material_color_utilities.palettes.CorePalettes} for core
  *     palettes container class.
  */
 @Deprecated
@@ -42,8 +42,8 @@ public final class CorePalette {
    * Create key tones from a color.
    *
    * @param argb ARGB representation of a color
-   * @deprecated Use {@link dynamiccolor.DynamicScheme} for color
-   *     scheme generation. Use {@link palettes.CorePalettes} for
+   * @deprecated Use {@link com.kaleyra.material_color_utilities.dynamiccolor.DynamicScheme} for color
+   *     scheme generation. Use {@link com.kaleyra.material_color_utilities.palettes.CorePalettes} for
    *     core palettes container class.
    */
   @Deprecated
@@ -55,8 +55,8 @@ public final class CorePalette {
    * Create content key tones from a color.
    *
    * @param argb ARGB representation of a color
-   * @deprecated Use {@link dynamiccolor.DynamicScheme} for color
-   *     scheme generation. Use {@link palettes.CorePalettes} for
+   * @deprecated Use {@link com.kaleyra.material_color_utilities.dynamiccolor.DynamicScheme} for color
+   *     scheme generation. Use {@link com.kaleyra.material_color_utilities.palettes.CorePalettes} for
    *     core palettes container class.
    */
   @Deprecated

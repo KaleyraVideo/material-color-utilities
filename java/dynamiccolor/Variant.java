@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dynamiccolor;
+package com.kaleyra.material_color_utilities.dynamiccolor;
 
 /** Themes for Dynamic Color. */
 public enum Variant {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package palettes;
+package com.kaleyra.material_color_utilities.palettes;
 
 /**
  * Comprises foundational palettes to build a color scheme.

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package dynamiccolor;
+package com.kaleyra.material_color_utilities.dynamiccolor;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import dynamiccolor.DynamicScheme.Platform;
-import hct.Hct;
-import palettes.TonalPalette;
+import com.kaleyra.material_color_utilities.dynamiccolor.DynamicScheme.Platform;
+import com.kaleyra.material_color_utilities.hct.Hct;
+import com.kaleyra.material_color_utilities.palettes.TonalPalette;
 import java.util.Optional;
 
 /** An interface defining all the necessary methods that could be different between specs. */

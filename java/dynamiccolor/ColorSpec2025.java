@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-package dynamiccolor;
+package com.kaleyra.material_color_utilities.dynamiccolor;
 
-import static dynamiccolor.DynamicScheme.Platform.PHONE;
-import static dynamiccolor.DynamicScheme.Platform.WATCH;
-import static dynamiccolor.ToneDeltaPair.DeltaConstraint.EXACT;
-import static dynamiccolor.ToneDeltaPair.DeltaConstraint.FARTHER;
-import static dynamiccolor.TonePolarity.DARKER;
-import static dynamiccolor.TonePolarity.RELATIVE_LIGHTER;
-import static dynamiccolor.Variant.EXPRESSIVE;
-import static dynamiccolor.Variant.NEUTRAL;
-import static dynamiccolor.Variant.TONAL_SPOT;
-import static dynamiccolor.Variant.VIBRANT;
+import static com.kaleyra.material_color_utilities.dynamiccolor.DynamicScheme.Platform.PHONE;
+import static com.kaleyra.material_color_utilities.dynamiccolor.DynamicScheme.Platform.WATCH;
+import static com.kaleyra.material_color_utilities.dynamiccolor.ToneDeltaPair.DeltaConstraint.EXACT;
+import static com.kaleyra.material_color_utilities.dynamiccolor.ToneDeltaPair.DeltaConstraint.FARTHER;
+import static com.kaleyra.material_color_utilities.dynamiccolor.TonePolarity.DARKER;
+import static com.kaleyra.material_color_utilities.dynamiccolor.TonePolarity.RELATIVE_LIGHTER;
+import static com.kaleyra.material_color_utilities.dynamiccolor.Variant.EXPRESSIVE;
+import static com.kaleyra.material_color_utilities.dynamiccolor.Variant.NEUTRAL;
+import static com.kaleyra.material_color_utilities.dynamiccolor.Variant.TONAL_SPOT;
+import static com.kaleyra.material_color_utilities.dynamiccolor.Variant.VIBRANT;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import contrast.Contrast;
-import dynamiccolor.DynamicScheme.Platform;
-import dynamiccolor.ToneDeltaPair.DeltaConstraint;
-import hct.Hct;
-import palettes.TonalPalette;
-import utils.MathUtils;
+import com.kaleyra.material_color_utilities.contrast.Contrast;
+import com.kaleyra.material_color_utilities.dynamiccolor.DynamicScheme.Platform;
+import com.kaleyra.material_color_utilities.dynamiccolor.ToneDeltaPair.DeltaConstraint;
+import com.kaleyra.material_color_utilities.hct.Hct;
+import com.kaleyra.material_color_utilities.palettes.TonalPalette;
+import com.kaleyra.material_color_utilities.utils.MathUtils;
 import java.util.ArrayList;
 import java.util.Optional;
 

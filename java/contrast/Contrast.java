@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package contrast;
+package com.kaleyra.material_color_utilities.contrast;
 
 import static java.lang.Math.max;
 
-import utils.ColorUtils;
+import com.kaleyra.material_color_utilities.utils.ColorUtils;
 
 /**
  * Color science for contrast utilities.

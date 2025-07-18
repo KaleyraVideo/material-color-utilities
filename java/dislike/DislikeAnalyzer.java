@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package dislike;
+package com.kaleyra.material_color_utilities.dislike;
 
-import hct.Hct;
+import com.kaleyra.material_color_utilities.hct.Hct;
 
 /**
  * Check and/or fix universally disliked colors.

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package score;
+package com.kaleyra.material_color_utilities.score;
 
-import hct.Hct;
-import utils.MathUtils;
+import com.kaleyra.material_color_utilities.hct.Hct;
+import com.kaleyra.material_color_utilities.utils.MathUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

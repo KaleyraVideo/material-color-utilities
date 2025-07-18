@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package dynamiccolor;
+package com.kaleyra.material_color_utilities.dynamiccolor;
 
-import utils.MathUtils;
+import com.kaleyra.material_color_utilities.utils.MathUtils;
 
 /**
  * A class containing a value that changes with the contrast level.

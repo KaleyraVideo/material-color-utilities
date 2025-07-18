@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dynamiccolor;
+package com.kaleyra.material_color_utilities.dynamiccolor;
 
 /**
  * Describes the relationship in lightness between two colors.

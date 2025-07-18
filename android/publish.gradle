@@ -4,7 +4,7 @@ import java.nio.file.Paths
 import java.util.regex.Pattern
 
 ext.moduleGroupId = "com.kaleyra"
-ext.moduleVersion = "2024.08.02"
+ext.moduleVersion = "2025.07.00"
 
 def newLibVersion=  project.hasProperty("newLibVersion") ? project.getProperty("newLibVersion") : moduleVersion
 

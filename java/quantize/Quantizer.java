@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package quantize;
+package com.kaleyra.material_color_utilities.quantize;
 
 interface Quantizer {
   public QuantizerResult quantize(int[] pixels, int maxColors);

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package temperature;
+package com.kaleyra.material_color_utilities.temperature;
 
-import hct.Hct;
-import utils.ColorUtils;
-import utils.MathUtils;
+import com.kaleyra.material_color_utilities.hct.Hct;
+import com.kaleyra.material_color_utilities.utils.ColorUtils;
+import com.kaleyra.material_color_utilities.utils.MathUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

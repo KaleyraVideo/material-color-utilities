@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package quantize;
+package com.kaleyra.material_color_utilities.quantize;
 
-import utils.ColorUtils;
+import com.kaleyra.material_color_utilities.utils.ColorUtils;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

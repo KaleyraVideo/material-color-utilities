@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package utils;
+package com.kaleyra.material_color_utilities.utils;
 
 /** Utility methods for string representations of colors. */
 final class StringUtils {

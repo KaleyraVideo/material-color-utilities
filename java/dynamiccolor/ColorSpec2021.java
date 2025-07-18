@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dynamiccolor;
+package com.kaleyra.material_color_utilities.dynamiccolor;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -22,13 +22,13 @@ import static java.lang.Math.min;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.errorprone.annotations.Var;
-import contrast.Contrast;
-import dislike.DislikeAnalyzer;
-import dynamiccolor.DynamicScheme.Platform;
-import hct.Hct;
-import palettes.TonalPalette;
-import temperature.TemperatureCache;
-import utils.MathUtils;
+import com.kaleyra.material_color_utilities.contrast.Contrast;
+import com.kaleyra.material_color_utilities.dislike.DislikeAnalyzer;
+import com.kaleyra.material_color_utilities.dynamiccolor.DynamicScheme.Platform;
+import com.kaleyra.material_color_utilities.hct.Hct;
+import com.kaleyra.material_color_utilities.palettes.TonalPalette;
+import com.kaleyra.material_color_utilities.temperature.TemperatureCache;
+import com.kaleyra.material_color_utilities.utils.MathUtils;
 import java.util.ArrayList;
 import java.util.Optional;
 

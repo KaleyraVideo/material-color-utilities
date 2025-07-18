@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dynamiccolor;
+package com.kaleyra.material_color_utilities.dynamiccolor;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

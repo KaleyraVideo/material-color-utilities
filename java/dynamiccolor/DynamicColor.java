@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package dynamiccolor;
+package com.kaleyra.material_color_utilities.dynamiccolor;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import contrast.Contrast;
-import dynamiccolor.ColorSpec.SpecVersion;
-import hct.Hct;
-import palettes.TonalPalette;
-import utils.MathUtils;
+import com.kaleyra.material_color_utilities.contrast.Contrast;
+import com.kaleyra.material_color_utilities.dynamiccolor.ColorSpec.SpecVersion;
+import com.kaleyra.material_color_utilities.hct.Hct;
+import com.kaleyra.material_color_utilities.palettes.TonalPalette;
+import com.kaleyra.material_color_utilities.utils.MathUtils;
 import java.util.HashMap;
 import java.util.function.Function;
 

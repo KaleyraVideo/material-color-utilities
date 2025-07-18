@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package scheme;
+package com.kaleyra.material_color_utilities.scheme;
 
-import dynamiccolor.ColorSpec.SpecVersion;
-import dynamiccolor.ColorSpecs;
-import dynamiccolor.DynamicScheme;
-import dynamiccolor.Variant;
-import hct.Hct;
+import com.kaleyra.material_color_utilities.dynamiccolor.ColorSpec.SpecVersion;
+import com.kaleyra.material_color_utilities.dynamiccolor.ColorSpecs;
+import com.kaleyra.material_color_utilities.dynamiccolor.DynamicScheme;
+import com.kaleyra.material_color_utilities.dynamiccolor.Variant;
+import com.kaleyra.material_color_utilities.hct.Hct;
 
 /** A loud theme, colorfulness is maximum for Primary palette, increased for others. */
 public class SchemeVibrant extends DynamicScheme {

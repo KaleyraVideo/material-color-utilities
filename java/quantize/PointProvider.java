@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package quantize;
+package com.kaleyra.material_color_utilities.quantize;
 
 /** An interface to allow use of different color spaces by quantizers. */
 public interface PointProvider {
