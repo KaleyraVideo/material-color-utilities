@@ -84,10 +84,20 @@ jobs:
           echo -e "maven.accessKey=$MAVEN_ACCESSKEY\nmaven.secretKey=$MAVEN_SECRETKEY\nmaven.distributionId=$MAVEN_DISTRIBUTIONID" >> ./local.properties
       - name: Release new version
         run: ./gradlew publishUpload -PdryRun=false
-      - name: Pull Remote Changes
-        run: git pull
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Update version
-          file_pattern: 'android/*.gradle'
-          tagging_message: ${{ steps.output_specific_tag.outputs.TAG }}
+  commit_changes:
+    runs-on: ubuntu-latest
+    needs: update_version
+	steps:  
+      - name: Configure Git user
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions Bot"
+      - name: Commit changes
+        run: |
+          git add android/publish.gradle
+          git commit -am "Update version to ${{ steps.output_specific_tag.outputs.TAG }}"
+          git push origin HEAD
+      - name: Create version tag
+        run: |
+          git tag -a "v${{ steps.output_specific_tag.outputs.TAG }}" -m "Update version ${{ steps.output_specific_tag.outputs.TAG }}"
+          git push origin --tags
