@@ -84,20 +84,19 @@ jobs:
           echo -e "maven.accessKey=$MAVEN_ACCESSKEY\nmaven.secretKey=$MAVEN_SECRETKEY\nmaven.distributionId=$MAVEN_DISTRIBUTIONID" >> ./local.properties
       - name: Release new version
         run: ./gradlew publishUpload -PdryRun=false
-  commit_changes:
-    runs-on: ubuntu-latest
-    needs: update_version
-    steps:  
       - name: Configure Git user
+        working-directory: ./	  
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Actions Bot"
       - name: Commit changes
+        working-directory: ./
         run: |
           git add android/publish.gradle
-          git commit -am "Update version to ${{ needs.update_version.steps.output_specific_tag.outputs.TAG }}"
+          git commit -am "Update version to ${{ steps.output_specific_tag.outputs.TAG }}"
           git push origin HEAD
       - name: Create version tag
+        working-directory: ./	  
         run: |
-          git tag -a "v${{ needs.update_version.steps.output_specific_tag.outputs.TAG }}" -m "Update version ${{ needs.update_version.steps.output_specific_tag.outputs.TAG }}"
+          git tag -a "v${{ steps.output_specific_tag.outputs.TAG }}" -m "Update version ${{ steps.output_specific_tag.outputs.TAG }}"
           git push origin --tags
