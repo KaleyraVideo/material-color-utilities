@@ -8,7 +8,7 @@ INCLUDE_AAR_METADATA = len(sys.argv) > 2 and sys.argv[2].lower() == "true"
 # Move to project root
 os.chdir("../")
 
-print("|---> 🧠 GENERATING THIRD PARTIES LICENSE FILE FOR MODULE {MODULE_NAME}...")
+print(f"|---> 🧠 GENERATING THIRD PARTIES LICENSE FILE FOR MODULE {MODULE_NAME}...")
 
 # Generate license report
 os.system("./gradlew generateLicenseReport")
