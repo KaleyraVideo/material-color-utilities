@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./kaleyra
+        working-directory: ./android
     environment:
       name: release_environment
     steps:
@@ -59,7 +59,7 @@ jobs:
     needs: clean_build
     defaults:
       run:
-        working-directory: ./kaleyra
+        working-directory: ./android
     steps:
       - uses: actions/checkout@v2
         with:
@@ -76,7 +76,7 @@ jobs:
         run: python3 -m pip install semver boto3
       - name: Update specific version
         id: output_specific_tag
-        run: ./gradlew updateLibVersion -PnewLibVersion=${{inputs.specific_release_version }}
+        run: ./gradlew updateLibVersion -PnewLibVersion=${{ inputs.specific_release_version }}
       - name: Update Maven credentials
         env:
           MAVEN_ACCESSKEY: ${{ secrets.MAVEN_ACCESSKEY }}
@@ -91,5 +91,5 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update version
-          file_pattern: 'kaleyra/*.gradle'
+          file_pattern: 'android/*.gradle'
           tagging_message: ${{ steps.output_specific_tag.outputs.TAG }}
