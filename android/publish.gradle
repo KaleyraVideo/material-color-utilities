@@ -93,7 +93,6 @@ tasks.register("publishUpload") {
     dependsOn publishTask
     dependsOn 'invalidateCache'
     tasks.invalidateCache.mustRunAfter(publishTask)
-    finalizedBy("postMavenPublish")
 }
 
 def namespace
@@ -107,14 +106,6 @@ tasks.register("addPackagePrefix") {
         def folderPath = android.sourceSets.main.java.srcDirs[0].toString()
         def originalPackages = findOriginalPackagesAndUpdateDeclarations(folderPath, namespace)
         updateImportsAndLinks(folderPath, namespace, originalPackages)
-    }
-}
-// not needed for github action, useful only if for local release
-tasks.register("postMavenPublish") {
-    doLast {
-        exec {
-            commandLine("git", "reset", "--hard")
-        }
     }
 }
 
