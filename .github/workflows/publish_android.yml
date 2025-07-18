@@ -87,7 +87,7 @@ jobs:
   commit_changes:
     runs-on: ubuntu-latest
     needs: update_version
-	steps:  
+    steps:  
       - name: Configure Git user
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
