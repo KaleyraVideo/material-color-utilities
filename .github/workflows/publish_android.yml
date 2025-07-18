@@ -95,9 +95,9 @@ jobs:
       - name: Commit changes
         run: |
           git add android/publish.gradle
-          git commit -am "Update version to ${{ steps.output_specific_tag.outputs.TAG }}"
+          git commit -am "Update version to ${{ needs.update_version.steps.output_specific_tag.outputs.TAG }}"
           git push origin HEAD
       - name: Create version tag
         run: |
-          git tag -a "v${{ steps.output_specific_tag.outputs.TAG }}" -m "Update version ${{ steps.output_specific_tag.outputs.TAG }}"
+          git tag -a "v${{ needs.update_version.steps.output_specific_tag.outputs.TAG }}" -m "Update version ${{ needs.update_version.steps.output_specific_tag.outputs.TAG }}"
           git push origin --tags
