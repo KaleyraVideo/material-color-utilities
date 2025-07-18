@@ -1,4 +1,4 @@
-name: Release Version
+name: Release Android Library
 
 on:
   workflow_call:
