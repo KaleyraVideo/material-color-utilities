@@ -13,7 +13,7 @@ task unzipAar(type: Copy, dependsOn: 'bundleReleaseAar') {
 task generateThirdPartiesLicenses(type: Exec, dependsOn: 'unzipAar') {
     workingDir '../scripts'
     println(project.getName())
-    commandLine 'python3', 'generate_third_parties_licenses.py', project.getName(), /* include aar metadata */ 'false'
+    commandLine 'python3', 'generate_third_parties_licenses.py', project.getName(), /* include aar metadata */ 'true'
     doLast {
         outputAarUnzipedDir.deleteDir()
     }
